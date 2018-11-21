@@ -173,25 +173,25 @@ length(df_train_labels_2)
 length(df_test_labels_2)
 
 # Different values for K
-model_v3 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 1)
-CrossTable(x = df_test_labels_z, y = model_v3, prop.chisq = FALSE)
+# model_v3 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 1)
+# CrossTable(x = df_test_labels_z, y = model_v3, prop.chisq = FALSE)
 
-model_v4 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 5)
-CrossTable(x = df_test_labels_z, y = model_v4, prop.chisq = FALSE)
+# model_v4 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 5)
+# CrossTable(x = df_test_labels_z, y = model_v4, prop.chisq = FALSE)
 
-model_v5 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 11)
-CrossTable(x = df_test_labels_z, y = model_v5, prop.chisq = FALSE)
+# model_v5 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 11)
+# CrossTable(x = df_test_labels_z, y = model_v5, prop.chisq = FALSE)
 
-model_v6 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 15)
-CrossTable(x = df_test_labels_z, y = model_v6, prop.chisq = FALSE)
+# model_v6 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 15)
+# CrossTable(x = df_test_labels_z, y = model_v6, prop.chisq = FALSE)
 
-model_v7 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 27)
-CrossTable(x = df_test_labels_z, y = model_v7, prop.chisq = FALSE)
+# model_v7 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 27)
+# CrossTable(x = df_test_labels_z, y = model_v7, prop.chisq = FALSE)
 
-model_v8 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 21)
-CrossTable(x = df_test_labels_z, y = model_v8, prop.chisq = FALSE)
+# model_v8 <- knn(train = train_index, test = test_index, cl = df_train_labels, k = 21)
+# CrossTable(x = df_test_labels_z, y = model_v8, prop.chisq = FALSE)
 
-## Calculating the error rate
+## Step 6 - Calculating the error rate
 prev = NULL
 error_rate = NULL
 
