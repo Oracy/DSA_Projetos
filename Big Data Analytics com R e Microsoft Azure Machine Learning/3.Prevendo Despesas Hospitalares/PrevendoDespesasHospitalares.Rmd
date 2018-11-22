@@ -18,7 +18,7 @@ For this analysis, we will use a data set simulating hypothetical medical expens
 
 ```{r coleta}
 # Data gathering
-df <- read.csv('C:\\Users\\omartos\\Git\\DSA_Projetos\\DSA_Projetos\\Big Data Analytics com R e Microsoft Azure Machine Learning\\3.Prevendo Despesas Hospitalares\\despesas.csv', header = TRUE,sep = ',')
+df <- read.csv('C:\\Users\\Oracy\\Desktop\\DSA_Projetos\\DSA_Projetos\\Big Data Analytics com R e Microsoft Azure Machine Learning\\3.Prevendo Despesas Hospitalares\\despesas.csv', header = TRUE,sep = ',')
 head(df)
 ```
 
@@ -99,13 +99,13 @@ summary(model)
 ```{r otimizacao}
 # Adding a variable with twice the age value
 df$idade2 <- df$idade * 2
-df$idade2
-df$idade
+#df$idade2
+#df$idade
 
 # Adding a Bookmark to BMI> = 30
 # Font: https://www.datamentor.io/r-programming/ifelse-function/
 df$bmi30 <- ifelse(df$bmi >= 30, 1, 0)
-df$bmi30
+#df$bmi30
 
 # Creating the final template
 str(df)

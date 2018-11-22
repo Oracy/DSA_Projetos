@@ -1,7 +1,7 @@
 # Preventing Hospital Expenses
 
 # Set Directory
-setwd("C:\\Users\\omartos\\Git\\DSA_Projetos\\DSA_Projetos\\Big Data Analytics com R e Microsoft Azure Machine Learning\\3.Prevendo Despesas Hospitalares")
+setwd("C:\\Users\\Oracy\\Desktop\\DSA_Projetos\\DSA_Projetos\\Big Data Analytics com R e Microsoft Azure Machine Learning\\3.Prevendo Despesas Hospitalares")
 getwd()
 
 # For this analysis, we will use a data set simulating hypothetical medical expenses
