@@ -1,7 +1,7 @@
 # Risk analysis
 
 # Set Directory
-setwd("C:\\Users\\omartos\\Git\\DSA_Projetos\\DSA_Projetos\\Big Data Analytics com R e Microsoft Azure Machine Learning\\4.Analise de Risco de Credito")
+setwd("/home/oracy/Documents/DSA_Projetos/DSA_Projetos/Big Data Analytics com R e Microsoft Azure Machine Learning/4.Analise de Risco de Credito")
 getwd()
 
 # Loading my library
@@ -52,33 +52,50 @@ rfe.results <- feature.selection(feature.vars = df_train[,-1],
 # Viewing Results
 rfe.results
 varImp(rfe.results)
-variables <- predictors(rfe.results)
-variables <- ve
+predictors(rfe.results)
 plot(rfe.results, type = c("g","o"))
-# Creating and Evaluating the Model
 
-# Utilities library for graphing
+# Creating and Evaluating the Model
+#install.packages('ROCR')
+library(ROCR)
+source('plot_utils.r')
 
 ## separate feature and class variables
+test.feature.var <- df_test[,-1]
+test.class.var <- df_test[,1]
 
 # Building a Logistic Regression Model
-
+lm.init <- 'credit.rating ~ .'
+lm.init <- as.formula(lm.init)
+lr.model <- glm(formula = lm.init, data = df_train, family = "binomial")
+  
 # Viewing the template
+summary(lr.model)
+any(is.na(df))
 
 # Testing the Model in Test Data
+lr.predictions <- predict(lr.model, df_test, type = "response")
+lr.predictions <- round(lr.predictions)
 
 # Evaluating the model
+confusionMatrix(table(data = lr.predictions, reference = test.class.var), positive = '1')
 
 ## Feature selection
 
+
 # Building the model with the selected variables
+
 
 # Viewing the template
 
+
 # Testing the Model in Test Data
+
 
 # Evaluating the model
 
+
 # Evaluating model performance
+
 
 # Creating ROC Curves
