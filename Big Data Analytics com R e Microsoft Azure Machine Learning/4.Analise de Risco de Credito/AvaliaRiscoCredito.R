@@ -81,21 +81,34 @@ lr.predictions <- round(lr.predictions)
 confusionMatrix(table(data = lr.predictions, reference = test.class.var), positive = '1')
 
 ## Feature selection
-
+formula <- 'credit.rating ~ .'
+formula <- as.formula(formula)
+control <- trainControl(method = "repeatedcv", number = 10, repeats = 2)
+model <- train(formula, data = df_train, method = "glm", trControl = control)
+importance <- varImp(model, scale = FALSE)
+plot(importance)
 
 # Building the model with the selected variables
-
+newFormula <- "credit.rating ~ account.balance + credit.purpose + previous.credit.payment.status + savings + credit.duration.months"
+newFormula <- as.formula(newFormula)
+lrNewModel <- glm(formula = newFormula, data = df_train, family = "binomial")
 
 # Viewing the template
-
+summary(lrNewModel)
 
 # Testing the Model in Test Data
-
+lrNewPrediction <- predict(lrNewModel, df_test, type = "response")
+lrNewPrediction <- round(lrNewPrediction)
 
 # Evaluating the model
-
+confusionMatrix(table(data = lrNewPrediction, reference = test.class.var), positive = '1')
 
 # Evaluating model performance
 
-
 # Creating ROC Curves
+lrModelBest <- lr.model
+lrPredictionValue <- predict(lrModelBest, test.feature.var, type = "response")
+predictions <- prediction(lrPredictionValue, test.class.var)
+par(mfrow = c(1, 2))
+plot.roc.curve(predictions, title.text = "ROC Curve")
+plot.pr.curve(predictions, title.text = "Precision/Recall Curve")
