@@ -11,6 +11,27 @@ source('utils.R')
 df <- read.csv('credit_dataset.csv', header = TRUE, sep = ',')
 head(df)
 str(df)
+# credit.rating - Credito aprovado ou nao
+# account.balance - balanco conta bancaria 
+# credit.duration.months - duracao em meses do credito
+# previous.credit.payment. - Status do pagamento do credito anterior
+# credit.purpose - Tipo de Credito proposto
+# credit.amount - Quantidade de credito
+# savings - Poupanca
+# employment.duration - Duracao no emprego atual
+# installment.rate - Taxa de parcelamento
+# marital.status - Estato civil
+# guarantor - Fiador
+# residence.duration - Quanto tempo esta naquela residencia
+# current.assets - Ativos correntes
+# age - Idade do solicitante
+# other.credits - Outros creditos
+# apartment.type - Tipo do apartamento
+# bank.credits - Outros Creditos bancarios
+# occupation - Cargo que ele ocupa na empresa
+# dependents - Quantos dependentes possue
+# telephone - Possue telefone
+# foreign.worker - Trabalhador estrangeiro
 
 # Normalizing the variables
 numeric.vars <- c("credit.duration.months", "age", "credit.amount")

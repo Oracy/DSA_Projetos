@@ -27,6 +27,27 @@ getwd()
 df <- read.csv('credit_dataset.csv', header = TRUE, sep = ',')
 head(df)
 str(df)
+# credit.rating - Credito aprovado ou nao
+# account.balance - balanco conta bancaria 
+# credit.duration.months - duracao em meses do credito
+# previous.credit.payment. - Status do pagamento do credito anterior
+# credit.purpose - Tipo de Credito proposto
+# credit.amount - Quantidade de credito
+# savings - Poupanca
+# employment.duration - Duracao no emprego atual
+# installment.rate - Taxa de parcelamento
+# marital.status - Estato civil
+# guarantor - Fiador
+# residence.duration - Quanto tempo esta naquela residencia
+# current.assets - Ativos correntes
+# age - Idade do solicitante
+# other.credits - Outros creditos
+# apartment.type - Tipo do apartamento
+# bank.credits - Outros Creditos bancarios
+# occupation - Cargo que ele ocupa na empresa
+# dependents - Quantos dependentes possue
+# telephone - Possue telefone
+# foreign.worker - Trabalhador estrangeiro
 ```
 
 
@@ -37,6 +58,7 @@ str(df)
 source('utils.R')
 
 # Normalizing the variables
+# os ados possuem diversos valores diferentes, a normalizacao eh aplicada para que todos os dados estejam dentro de uma distribuicao normal.
 numeric.vars <- c("credit.duration.months", "age", "credit.amount")
 df <- scale.features(df, numeric.vars)
 
@@ -82,11 +104,11 @@ rfe.results <- feature.selection(feature.vars = df_train[,-1],
                                  class.var = df_train[,1])
 
 # Viewing Results
+# Conseguimos visualizar todas as variaveis que temos dentro do nosso dataset, e quão impactante cada uma é para uma futura previsão, e quais sao as variaveis menos importante ou de menor impacto, como "dependents", "occupation" e "foreign.worker".
 rfe.results
 varImp(rfe.results)
 predictors(rfe.results)
 plot(rfe.results, type = c("g","o"))
-
 ```
 
 
@@ -118,6 +140,7 @@ lr.predictions <- predict(lr.model, df_test, type = "response")
 lr.predictions <- round(lr.predictions)
 
 # Evaluating the model
+# 
 confusionMatrix(table(data = lr.predictions, reference = test.class.var), positive = '1')
 ```
 
@@ -126,6 +149,7 @@ confusionMatrix(table(data = lr.predictions, reference = test.class.var), positi
 
 ```{r otimizando}
 ## Feature selection
+# Ploting 
 formula <- 'credit.rating ~ .'
 formula <- as.formula(formula)
 control <- trainControl(method = "repeatedcv", number = 10, repeats = 2)
