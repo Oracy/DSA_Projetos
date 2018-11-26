@@ -24,7 +24,7 @@
 
    - Capítulo: 15.
 
-5. Análise de Risco de Crédito.
+5. [Análise de Risco de Crédito.](https://github.com/Oracy/DSA_Projetos/blob/master/Big%20Data%20Analytics%20com%20R%20e%20Microsoft%20Azure%20Machine%20Learning/4.Analise%20de%20Risco%20de%20Credito/AvaliaRiscoCredito.pdf)
 
    - Capítulo: 16.
 
