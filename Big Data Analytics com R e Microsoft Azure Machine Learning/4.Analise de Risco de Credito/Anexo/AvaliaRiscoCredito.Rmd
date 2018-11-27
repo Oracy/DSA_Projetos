@@ -1,11 +1,11 @@
 ---
-title: "RIsk Analysis"
+  title: "RIsk Analysis"
 author: "Oracy Martos"
 date: "November 25, 2018"
 output: pdf_document
 ---
-
-```{r setup, include=FALSE}
+  
+  ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -18,7 +18,7 @@ Todo o projeto será descrito de acordo com suas etapas.
 ## Step 1 - Collecting Data
 
 # Set Directory
-setwd("/home/oracy/Documents/DSA_Projetos/DSA_Projetos/Big Data Analytics com R e Microsoft Azure Machine Learning/4.Analise de Risco de Credito")
+setwd("C:\\Users\\omartos\\Git\\DSA_Projetos\\DSA_Projetos\\Big Data Analytics com R e Microsoft Azure Machine Learning\\4.Analise de Risco de Credito\\Anexo")
 getwd()
 
 ```{r coleta}
@@ -113,9 +113,9 @@ plot(rfe.results, type = c("g","o"))
 
 
 ## Step 5 - Creating and Evaluating the Model
- 
- 
- 
+
+
+
 ```{r avaliando}
 #install.packages('ROCR')
 library(ROCR)
@@ -130,7 +130,7 @@ test.class.var <- df_test[,1]
 lm.init <- 'credit.rating ~ .'
 lm.init <- as.formula(lm.init)
 lr.model <- glm(formula = lm.init, data = df_train, family = "binomial")
-  
+
 # Viewing the template
 summary(lr.model)
 any(is.na(df))
@@ -140,7 +140,29 @@ lr.predictions <- predict(lr.model, df_test, type = "response")
 lr.predictions <- round(lr.predictions)
 
 # Evaluating the model
-# 
+
+# Interpreting results
+# The cross tabel shows 4 possible values, which represent the false/true positive and negative
+# The first columns list the originals labels on the observed data.
+# The two columns of the model (0 and 1) of the model, show the results of the forecast
+# We have:
+# Schenario 1: 0 cell (label) x 0 (Model) - 49 cases - true negative
+# Schenario 2: 0 cell (label) x 1 (Model) - 41 cases - false positive
+# Schenario 3: 1 Cell (label) x 0 (Model) - 54 cases - false negative (model missed) 
+# Schenario 4: 1 Cell (label) x 1 (Model) - 256 cases - true positive
+
+# Reading the Confusing Matrix (Perspect of having the disease or not)
+
+# True Negative  = Our model predicted that the person did NOT received the credit and the data showed that the person really did NOT received the credit
+# False Positive = Our model predicted that the person received the credit and the data showed that NO, the person received the credit
+# False Negative = Our model predicted that the person did NOT received the credit and the data showed that YES, the person received the credit
+# True Positive = Our model predicted that the person received the credit and the data showed that YES, the person received the credit
+
+# False Positive - Type I Error
+# False Negative - Type II Error
+
+# Model Accuracy: 76.25% (305 out of 400)
+
 confusionMatrix(table(data = lr.predictions, reference = test.class.var), positive = '1')
 ```
 
@@ -149,7 +171,7 @@ confusionMatrix(table(data = lr.predictions, reference = test.class.var), positi
 
 ```{r otimizando}
 ## Feature selection
-# Ploting 
+# Ploting the importance for all variables to help to select which one will use to create the model.
 formula <- 'credit.rating ~ .'
 formula <- as.formula(formula)
 control <- trainControl(method = "repeatedcv", number = 10, repeats = 2)
@@ -185,3 +207,31 @@ par(mfrow = c(1, 2))
 plot.roc.curve(predictions, title.text = "ROC Curve")
 plot.pr.curve(predictions, title.text = "Precision/Recall Curve")
 ```
+
+
+# Create a lot of models to check which one is better
+variables <- c("credit.rating", "account.balance", "credit.duration.months", "previous.credit.payment.", "credit.purpose", "credit.amount", "savings", "employment.duration", "installment.rate", "marital.status", "guarantor", "residence.duration", "current.assets", "age", "other.credits", "apartment.type", "bank.credits", "occupation", "dependents", "telephone", "foreign.worker")
+
+# Building the model with the selected variables
+newFormula <- "credit.rating ~ account.balance + credit.purpose + previous.credit.payment.status + savings + credit.duration.months"
+newFormula <- as.formula(newFormula)
+lrNewModel <- glm(formula = newFormula, data = df_train, family = "binomial")
+
+# Viewing the template
+summary(lrNewModel)
+
+# Testing the Model in Test Data
+lrNewPrediction <- predict(lrNewModel, df_test, type = "response")
+lrNewPrediction <- round(lrNewPrediction)
+
+# Evaluating the model
+confusionMatrix(table(data = lrNewPrediction, reference = test.class.var), positive = '1')
+
+# Avaliando a performance do modelo
+# Creating ROC Curves
+lrModelBest <- lr.model
+lrPredictionValue <- predict(lrModelBest, test.feature.var, type = "response")
+predictions <- prediction(lrPredictionValue, test.class.var)
+par(mfrow = c(1, 2))
+plot.roc.curve(predictions, title.text = "ROC Curve")
+plot.pr.curve(predictions, title.text = "Precision/Recall Curve")
