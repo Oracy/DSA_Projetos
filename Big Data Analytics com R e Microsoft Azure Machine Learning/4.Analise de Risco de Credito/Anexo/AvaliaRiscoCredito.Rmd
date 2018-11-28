@@ -235,3 +235,36 @@ predictions <- prediction(lrPredictionValue, test.class.var)
 par(mfrow = c(1, 2))
 plot.roc.curve(predictions, title.text = "ROC Curve")
 plot.pr.curve(predictions, title.text = "Precision/Recall Curve")
+
+
+
+
+## Step 8 - Select variables, ROC Curve and Final Model Evaluation
+```{r remodeling}
+df2 <- read.csv("credit_dataset.csv", header = TRUE, sep = ',')
+names(df2) <- c("cr", "ab", "cdm", "pcps", "cp", "cra", "s", "ed", "ir", "ms", "g", "rd", "cua", "a", "oc", "at", "bc", "o", "d", "t", "fw")
+data <- cor(df2)
+corrplot(data, method="color",  
+         type="upper", order="hclust", 
+         addCoef.col = "black", # Add coefficient of correlation
+         tl.col="black", tl.srt=45, #Text label color and rotation
+         tl.cex = 0.8, cl.cex = 0.8, number.cex = 0.8,
+         # Combine with significance
+         sig.level = 0.01, insig = "blank", 
+         # hide correlation coefficient on the principal diagonal
+         diag=FALSE 
+)
+```
+
+var <- names(df)
+result <- character(0)
+for (item in 1:length(var)){
+  colName <- colnames(df[item])
+  correlation <- cor(as.numeric(df$credit.rating), as.numeric(df[[item]]))
+  result[item] <- paste(colName, correlation)
+}
+
+cor(as.numeric(df$credit.rating), as.numeric(df[[2]]))
+
+result
+length(var)
